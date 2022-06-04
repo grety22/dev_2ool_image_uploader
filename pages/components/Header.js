@@ -1,17 +1,17 @@
 import React from 'react'
 
 export default function Header() {
-    let date = new Date()
+    // let date = new Date()
     return (
         <div className='w-full fixed top-0'>
             <div className="h-1 mb-2 bg-gradient-to-r from-violet-500 to-[#4843D9]"></div>
-            <div className='max-w-5xl text-right flex flex-col mx-auto my-0'>
-                <div className="mr-auto w-fit ">
-                    <p className='text-xs text-[#4843D9] font-medium pb-1 block'>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-2 stroke-[#4843D9] h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                        </svg>
-                    </p>
+            <div className='max-w-5xl text-right flex flex-col mx-auto my-0 group'>
+                <div className="mr-auto w-fit">
+                    <div className="flex items-center justify-center space-x-2 mb-2">
+                        <div className="w-2 h-2 rounded-full group-hover:animate-pulse bg-[#4843D9]"></div>
+                        <div className="w-2 h-2 rounded-full group-hover:animate-pulse bg-[#4843D9]"></div>
+                        <div className="w-2 h-2 rounded-full group-hover:animate-pulse bg-[#4843D9]"></div>
+                    </div>
                 </div>
                 <div className="
                     mr-auto 
