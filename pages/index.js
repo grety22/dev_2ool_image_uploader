@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef } from 'react'
 
 import AddImages from './components/AddImages'
 import Header from './components/Header'

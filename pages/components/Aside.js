@@ -13,7 +13,7 @@ export default function Aside({ removeAll, btnClass, downloadAll, pattern, btnEn
     function closeModalTB() {setIsOpenTB(false); copy(component);}  
     function openModalTB() {setIsOpenTB(true)}
 
-    const list = myFiles.map(file => (
+    const list = myFiles?.map(file => (
         // TODO add option to change this folder
         listUpdated.push("employer-logos/"+file.updated),
         <><span className='text-sm' key={file.path}>{`employer-logos/${file.updated},`}</span><br/></>

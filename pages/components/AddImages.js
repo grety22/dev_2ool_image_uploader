@@ -6,7 +6,7 @@ import Card from './Card'
 export default function AddImages({ myFiles, onDropFiles, pattern }) {
     var allImgsURL = []
 
-    const rename = (torename, pattern) => {
+    const rename = useCallback((torename) => {
         var oldName = torename.name
         var addPattern = oldName.replace(/(\.[\w\d_-]+)$/i, `${pattern.current.value ? pattern.current.value : '_color'}$1`);
         var toLower = addPattern.toLowerCase()
@@ -25,7 +25,7 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
         // console.log("array Images Renamed: " + allImgsURL) 
         
         return periodash;
-    }
+    },[pattern, allImgsURL])
 
     const onDrop = useCallback(acceptedFiles => {
         onDropFiles([...myFiles, ...acceptedFiles.map(file => 
@@ -34,7 +34,7 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
                 updated: rename(file, pattern),
             }),
         )])
-    }, [myFiles, onDropFiles])
+    }, [myFiles, onDropFiles, pattern, rename])
     
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
         accept: {
@@ -106,7 +106,7 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
                 </div>
                 <p className='text-[#77808C] text-lg ml-8 mb-10'>supported image types: <span className='font-bold'>png, svg, jpg</span></p>
             </Card>
-            <p className='block mb-8 text-[#77808C]'>{myFiles.length > 0 ? <span>you dropped <span className='text-[#4843D9] font-bold'>{myFiles.length}</span> images</span> : ""}</p>
+            <p className='block mb-8 text-[#77808C]'>{myFiles?.length > 0 ? <span>you dropped <span className='text-[#4843D9] font-bold'>{myFiles?.length || 0}</span> images</span> : ""}</p>
             {/* <button className="bg-red btn" onClick={downloadAll}>Download All</button> */}
             <Card shadow={'none'} grid={'grid grid-cols-3 gap-4'}>{ selected_imgs }</Card>
         </>
