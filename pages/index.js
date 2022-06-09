@@ -53,9 +53,15 @@ export default function Home() {
         myFiles?.map(file => {downloadedFolder.file(file.updated, file.preview, {base64: true})})
 
         zip.generateAsync({ type: 'blob' }).then(function (content) {
-            console.log(content) //delete this line
-            saveAs(content, zipFilename);
-            console.log("Files downloaded successfully 🥳 🎉 🍰")
+            try {
+                console.log(content)
+                saveAs(content, zipFilename);
+                console.log("Files downloaded successfully 🥳 🎉 🍰")
+            } catch(err) {
+                console.log("houston we have a problem: " + err.stack)
+            } finally {
+                console.log(content)
+            }
         });
     }
 
