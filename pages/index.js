@@ -54,6 +54,7 @@ export default function Home() {
         myFiles?.map(file => {downloadedFolder.file(file.updated, file.preview, {base64: true})})
 
         zip.generateAsync({ type: 'blob' }).then(function (content) {
+            console.log(content) //delete this line
             saveAs(content, zipFilename);
         });
     }
