@@ -45,7 +45,6 @@ export default function Home() {
     const removeAllImages = () => { myFiles.length > 0 && setMyFiles([]) }
 
     const downloadAllImages = () => {
-        console.log("Files downloaded successfully 🥳 🎉 🍰")
         const zip = new JSZip();
 
         var downloadedFolder = zip.folder("employer-logos");
@@ -56,6 +55,7 @@ export default function Home() {
         zip.generateAsync({ type: 'blob' }).then(function (content) {
             console.log(content) //delete this line
             saveAs(content, zipFilename);
+            console.log("Files downloaded successfully 🥳 🎉 🍰")
         });
     }
 
