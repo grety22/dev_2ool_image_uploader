@@ -50,20 +50,13 @@ export default function Home() {
         var downloadedFolder = zip.folder("employer-logos");
         var zipFilename = "images.zip";
 
-        myFiles?.map(file => {downloadedFolder.file(file.updated, file.preview, {base64: true})})
+        myFiles?.map(file => {downloadedFolder.file(file.updated, file.preview)})
 
-        try {
-            zip.generateAsync({ type: 'blob' }).then(function (content) {
-                console.log(content)
-                saveAs(content, zipFilename);
-                console.log("Files downloaded successfully 🥳 🎉 🍰")
-            });
-        } catch(err) {
-            console.log("houston we have a problem: " + err.stack)
-        } finally {
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
             console.log(content)
-        }
-        
+            saveAs(content, zipFilename);
+            console.log("Files downloaded successfully 🥳 🎉 🍰")
+        });
     }
 
     return (
