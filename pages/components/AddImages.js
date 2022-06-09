@@ -1,39 +1,40 @@
-import React, { useCallback, useState, useRef } from 'react'
+import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { db, storage } from '../../firebase'
-import { addDoc, arrayUnion, collection, serverTimestamp, updateDoc, doc } from 'firebase/firestore'
-import { async } from '@firebase/util'
-import { ref, getDownloadURL, uploadBytes } from '@firebase/storage' 
 import Card from './Card'
-import Image from 'next/image'
 
-export default function AddImages({ myFiles, onDropFiles }) {
-    // const captionRef = useRef(null)
-    // const uploadRenamed = async() => {
-    //     const docRef = await addDoc(collection(db, "pattern"), {
-    //         caption: captionRef.current.value,
-    //         timestamp: serverTimestamp()
-    //     })
-    //     await Promise.all(
-    //         myFiles.map(img => {
-    //             const imageRef = ref(storage, `pattern/${docRef.id}/${img.path}`)
-    //             uploadBytes(imageRef, img, "data_url").then(async() => {
-    //                 const downloadURL = await getDownloadURL(imageRef)
-    //                 await updateDoc(doc(db, "pattern", docRef.id), {
-    //                     imgs:arrayUnion(downloadURL)
-    //                 })
-    //             })
-    //         })
-    //     )
-    //     captionRef.current.value=''
-    //     onDropFiles([])
-    // }
+
+export default function AddImages({ myFiles, onDropFiles, pattern }) {
+    var allImgsURL = []
+
+    const rename = (torename, pattern) => {
+        var oldName = torename.name
+        var addPattern = oldName.replace(/(\.[\w\d_-]+)$/i, `${pattern.current.value ? pattern.current.value : '_color'}$1`);
+        var toLower = addPattern.toLowerCase()
+        var removeWhitespaces = toLower.replace(/\s+/g, '_')
+        var addDash = removeWhitespaces.replace(/-/g, '_')
+        var rmDoubleDash = addDash.replace('___', '_')
+        var periodash = rmDoubleDash.replace('._', '_')
+        allImgsURL.push(periodash) 
+
+        // console.log("oldName: " + oldName)
+        // console.log("pattern Added: " + addPattern)
+        // console.log("whitespaces removed: " + removeWhitespaces)
+        // console.log("dash added: " + addDash)
+        // console.log("final resul: " + periodash)
+
+        // console.log("array Images Renamed: " + allImgsURL) 
+        
+        return periodash;
+    }
 
     const onDrop = useCallback(acceptedFiles => {
-        onDropFiles([...myFiles, ...acceptedFiles.map(file => Object.assign(file, {
-            preview: URL.createObjectURL(file)
-        }))])
-    }, [myFiles])
+        onDropFiles([...myFiles, ...acceptedFiles.map(file => 
+            Object.assign(file, {
+                preview: URL.createObjectURL(file),
+                updated: rename(file, pattern),
+            }),
+        )])
+    }, [myFiles, onDropFiles])
     
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
         accept: {
@@ -47,9 +48,7 @@ export default function AddImages({ myFiles, onDropFiles }) {
         newFiles.splice(newFiles.indexOf(file), 1)
         onDropFiles(newFiles)
     }
-    
-    const removeAll = () => { onDropFiles([]) }
-    
+
     const selected_imgs = myFiles?.map(file => (
         <div className="bg-white p-2 shadow-3xl rounded-lg text-center flex items-center flex-col justify-between" key={file.path}>
             <div onClick={removeFile(file)} className="group bg-white pt-2 pr-2 pb-4 pl-4 border cursor-pointer rounded-bl-full text-center ml-auto hover:border-[#4843D9]">
@@ -57,11 +56,15 @@ export default function AddImages({ myFiles, onDropFiles }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
             </div>
-            <img src={file.preview} className="w-48 h-auto my-0 mx-auto" alt=""/>
-            <p className="w-48 h-auto break-words text-[#77808C] text-sm border-t-2 block bg-[#F9FAFB] mt-4 mb-0 p-2" alt="">{file.name}</p>
+            <div className='w-48 h-24'>
+                <a href={file.preview} download={file.updated} alt="">
+                    <img src={file.preview} className="w-48 h-auto my-0 mx-auto hover:w-44" alt=""/>
+                </a>
+            </div>
+            <p className="w-fit h-auto break-all text-[#77808C] text-sm border-t-2 block bg-[#F9FAFB] mt-4 mb-0 p-2" alt="">{file.updated}</p>
         </div>
     ))
-    
+
     return (
         <>
             <Card bgColor={'bg-white'} shadow={'shadow-3xl'}>
@@ -104,9 +107,8 @@ export default function AddImages({ myFiles, onDropFiles }) {
                 <p className='text-[#77808C] text-lg ml-8 mb-10'>supported image types: <span className='font-bold'>png, svg, jpg</span></p>
             </Card>
             <p className='block mb-8 text-[#77808C]'>{myFiles.length > 0 ? <span>you dropped <span className='text-[#4843D9] font-bold'>{myFiles.length}</span> images</span> : ""}</p>
-            <Card shadow={'none'} grid={'grid grid-cols-3 gap-4'}>
-                { selected_imgs }
-            </Card>
+            {/* <button className="bg-red btn" onClick={downloadAll}>Download All</button> */}
+            <Card shadow={'none'} grid={'grid grid-cols-3 gap-4'}>{ selected_imgs }</Card>
         </>
     )
 }
