@@ -16,7 +16,7 @@ export default function Aside({ removeAll, btnClass, downloadAll, pattern, btnEn
     const list = myFiles?.map(file => (
         // TODO add option to change this folder
         listUpdated.push("employer-logos/"+file.updated),
-        <><span className='text-sm' key={file.path}>{`employer-logos/${file.updated},`}</span><br/></>
+        <div key={file.path}><span className='text-sm'>{`employer-logos/${file.updated},`}</span><br/></div>
     ))
 
     const component = `[trilogy_landing_core_section section_id="" template_style="trilogy_landing_core_section--stack" bg_section_style="light" section_settings="" section_paddings="regular" section_margins="regular" section_titles_align="default" col_classes_title="col-xs-12" col_classes_content="col-xs-12" title="T3VyJTIwQm9vdCUyMENhbXAlMjBMZWFybmVycyUyMEFyZSUyMCUzQ3NwYW4lMjBjbGFzcyUzRCUyMnRleHQtbm93cmFwJTIyJTNFaW4lMjBEZW1hbmQlM0MlMkZzcGFuJTNF" sub_title="" hr_position="none" title_tag="span" subtitle_tag="span" content_raw="T3VyJTIwZW1wbG95ZXItY29tcGV0aXRpdmUlMjBsZWFybmVycyUyMGhhdmUlMjByZWNlaXZlZCUyMGpvYiUyMG9mZmVycyUyMGZyb20lMjB0aG91c2FuZHMlMjBvZiUyMGdsb2JhbCUyMG9yZ2FuaXphdGlvbnMuJTIwQXMlMjB5b3UlMjB0YWtlJTIwdGhlJTIwbmV4dCUyMHN0ZXBzJTIwaW4lMjB5b3VyJTIwY2FyZWVyJTJDJTIweW91JUUyJTgwJTk5bGwlMjBoYXZlJTIwZXhjbHVzaXZlJTIwYWNjZXNzJTIwdG8lMjBqb2IlMjByZWZlcnJhbHMlMjBmcm9tJTIwJTNDc3Ryb25nJTNFb3VyJTIwbmV0d29yayUyMG9mJTIwJTNDc3BhbiUyMGNsYXNzJTNEJTIydGV4dC1ub3dyYXAlMjIlM0UyNTAlMkIlMjBwYXJ0bmVycyUzQyUyRnNwYW4lM0UlM0MlMkZzdHJvbmclM0Uu" section_settings_inner_bg="light"][trilogy_landing_carousel_logos template_style="trilogy_landing_carousel_logos--v1" logos_autocomplete="${listUpdated}"][/trilogy_landing_core_section]`

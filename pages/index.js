@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import Head from "next/head";
 
 import AddImages from './components/AddImages'
 import Header from './components/Header'
@@ -47,30 +46,20 @@ export default function Home() {
 
     const downloadAllImages = () => {
         const zip = new JSZip();
-
-        var downloadedFolder = zip.folder("employer-logos");
-        var zipFilename = "images.zip";
-
-        myFiles?.map(file => {downloadedFolder.file(file.updated, file.preview)})
-
+        const downloadFolder = zip.folder("employer-logos-renamed");
+        const zipFilename = "images.zip";
+       
+        myFiles?.map(file => {
+            downloadFolder.file(file.updated, file, {base64: true})
+        })
+        
         zip.generateAsync({ type: 'blob' }).then(function (content) {
-            console.log(content)
             saveAs(content, zipFilename);
-            console.log("Files downloaded successfully 🥳 🎉 🍰")
         });
     }
 
     return (
         <>
-            <Head>
-                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-                <link rel="manifest" href="/site.webmanifest" />
-                <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-                <meta name="msapplication-TileColor" content="#da532c" />
-                <meta name="theme-color" content="#ffffff" />
-            </Head>
             <div className='flex flex-col justify-center items-center mt-20 font-sans'>
                 <Header />
                 <AddImages myFiles={myFiles} onDropFiles={onDropHandler} pattern={patternRef}/>
