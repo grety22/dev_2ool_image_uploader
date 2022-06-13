@@ -49,8 +49,8 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
 
     const selected_imgs = myFiles?.map(file => (
             <div className={`bg-white p-2 shadow-3xl rounded-lg text-center flex items-center flex-col justify-between ${checkEspecialChar(file.name)}`} key={file.path}>
-                <div className='flex flex-row-reverse mb-4'>
-                    <div onClick={removeFile(file)} className="group bg-white pt-2 pr-2 pb-4 pl-4 border cursor-pointer rounded-bl-full text-center ml-auto hover:border-[#4843D9]">
+                <div className='flex flex-row-reverse mb-4 ml-auto'>
+                    <div onClick={removeFile(file)} className="max-h-12 w-12 group bg-white pt-2 pr-2 pb-4 pl-4 border cursor-pointer rounded-bl-full text-center ml-auto hover:border-[#4843D9]">
                         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-1 stroke-[#77808C] group-hover:stroke-[#4843D9] group-hover:stroke-2 h-6 w-6" fill="none" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
