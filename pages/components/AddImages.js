@@ -14,17 +14,9 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
         var addDash = removeWhitespaces.replace(/-/g, '_')
         var rmDoubleDash = addDash.replace('___', '_')
         var periodash = rmDoubleDash.replace('._', '_')
-        allImgsURL.push(periodash) 
-
-        // console.log("oldName: " + oldName)
-        // console.log("pattern Added: " + addPattern)
-        // console.log("whitespaces removed: " + removeWhitespaces)
-        // console.log("dash added: " + addDash)
-        // console.log("final resul: " + periodash)
-
-        // console.log("array Images Renamed: " + allImgsURL) 
-        
-        return periodash;
+        var comma = periodash.replace(',', '')
+        allImgsURL.push(comma)
+        return comma;
     },[pattern, allImgsURL])
 
     const onDrop = useCallback(acceptedFiles => {
@@ -49,20 +41,29 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
         onDropFiles(newFiles)
     }
 
+    const checkEspecialChar = (esp_char) => {
+        let find_char = esp_char.indexOf(",")
+        let esp_class =  find_char > 0 ? "border border-pink-500" : ""
+        return esp_class
+    }
+
     const selected_imgs = myFiles?.map(file => (
-        <div className="bg-white p-2 shadow-3xl rounded-lg text-center flex items-center flex-col justify-between" key={file.path}>
-            <div onClick={removeFile(file)} className="group bg-white pt-2 pr-2 pb-4 pl-4 border cursor-pointer rounded-bl-full text-center ml-auto hover:border-[#4843D9]">
-                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-1 stroke-[#77808C] group-hover:stroke-[#4843D9] group-hover:stroke-2 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
+            <div className={`bg-white p-2 shadow-3xl rounded-lg text-center flex items-center flex-col justify-between ${checkEspecialChar(file.name)}`} key={file.path}>
+                <div className='flex flex-row-reverse mb-4'>
+                    <div onClick={removeFile(file)} className="group bg-white pt-2 pr-2 pb-4 pl-4 border cursor-pointer rounded-bl-full text-center ml-auto hover:border-[#4843D9]">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-1 stroke-[#77808C] group-hover:stroke-[#4843D9] group-hover:stroke-2 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </div>
+                    {checkEspecialChar(file.name) !== '' ? <p className='text-pink-600 text-xs text-left'>Please check this img doesnt exist already in repo including comma</p> : ""}
+                </div>
+                <div className='w-48 h-24'>
+                    <a href={file.preview} download={file.updated} alt="">
+                        <img src={file.preview} className="w-48 h-auto my-0 mx-auto hover:w-44" alt=""/>
+                    </a>
+                </div>
+                <p className="w-fit h-auto break-all text-[#77808C] text-sm border-t-2 block bg-[#F9FAFB] mt-4 mb-0 p-2" alt="">{file.updated}</p>
             </div>
-            <div className='w-48 h-24'>
-                <a href={file.preview} download={file.updated} alt="">
-                    <img src={file.preview} className="w-48 h-auto my-0 mx-auto hover:w-44" alt=""/>
-                </a>
-            </div>
-            <p className="w-fit h-auto break-all text-[#77808C] text-sm border-t-2 block bg-[#F9FAFB] mt-4 mb-0 p-2" alt="">{file.updated}</p>
-        </div>
     ))
 
     return (
@@ -108,7 +109,7 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
             </Card>
             <p className='block mb-8 text-[#77808C]'>{myFiles?.length > 0 ? <span>you dropped <span className='text-[#4843D9] font-bold'>{myFiles?.length || 0}</span> images</span> : ""}</p>
             {/* <button className="bg-red btn" onClick={downloadAll}>Download All</button> */}
-            <Card shadow={'none'} grid={'grid grid-cols-3 gap-4'}>{ selected_imgs }</Card>
+            <Card shadow={'none'} grid={'grid grid-cols-3 gap-6'}>{ selected_imgs }</Card>
         </>
     )
 }
