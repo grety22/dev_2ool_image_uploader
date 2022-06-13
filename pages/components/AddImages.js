@@ -55,7 +55,7 @@ export default function AddImages({ myFiles, onDropFiles, pattern }) {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                     </div>
-                    {checkEspecialChar(file.name) !== '' ? <p className='text-pink-600 text-xs text-left'>Please check this img doesnt exist already in repo including comma</p> : ""}
+                    {checkEspecialChar(file.name) !== '' ? <p className='text-pink-600 text-xs text-left'>Please check this img doesnt exist already in repo like : <a className='font-medium hover:underline hover:underline-offset-4' rel="noreferrer" href='https://github.com/TrilogyMarketing/Websites/tree/master/CodingBootcamp/media/svg-icons/employer-logos' target="_blank">{file.name}</a></p> : ""}
                 </div>
                 <div className='w-48 h-24'>
                     <a href={file.preview} download={file.updated} alt="">
